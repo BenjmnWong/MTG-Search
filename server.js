@@ -2,7 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch'); // For server-side HTTP requests
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Serve static files from the "public" directory
 app.use(express.static('public'));
