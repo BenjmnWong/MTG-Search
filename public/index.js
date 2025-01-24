@@ -7,7 +7,11 @@ async function fetchCard() {
     cardDisplay.innerHTML = "";
 
     try {
-        const response = await fetch(`http://localhost:3000/api/card?name=${encodeURIComponent(cardName)}`);
+        const apiUrl = window.location.hostname === "localhost" ? 
+            "http://localhost:3000/api/card" : 
+            "https://your-app-url.onrender.com/api/card";
+
+        const response = await fetch(`${apiUrl}?name=${encodeURIComponent(cardName)}`);
         if (!response.ok) throw new Error("Card not found");
 
         cardData = await response.json();
