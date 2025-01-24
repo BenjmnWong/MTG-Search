@@ -9,7 +9,7 @@ async function fetchCard() {
     try {
         const apiUrl = window.location.hostname === "localhost" ? 
             "http://localhost:3000/api/card" : 
-            "https://your-app-url.onrender.com/api/card";
+            "https://mtg-search.onrender.com/api/card";
 
         const response = await fetch(`${apiUrl}?name=${encodeURIComponent(cardName)}`);
         if (!response.ok) throw new Error("Card not found");
