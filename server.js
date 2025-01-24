@@ -4,12 +4,17 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+// Serve static files from the "public" directory
 app.use(express.static('public'));
 
 // Route to search cards on Scryfall
 app.get('/search', async (req, res) => {
     const cardName = req.query.name; // Get the card name from the URL query
     
+    if (!cardName) {
+        return res.status(400).json({ error: 'Card name is required' });
+    }
+
     try {
         // Make the request to Scryfall API from the server-side
         const response = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`);
