@@ -8,13 +8,14 @@
 </head>
 <body>
     <h1><b>Magic: The Gathering Card Search</b></h1>
-    <input type="text" id="cardName" placeholder="Enter card name">
-    <button onclick="fetchCard()">Search</button>
+    <input type="text" id="cardName" placeholder="Ex. Lightning Bolt">
+    <button onclick="fetchCard()" id="search">Search</button>
     <div id="cardDisplay"></div>
+    <div id="card"></div>
     <div id="histBar">
-        <ol id="histList">
-        
-        </ol>
+        <p><b>Search History</b></p>
+        <ul id="histList">
+        </ul>
     </div>
     <script src="index.js"></script>
 </body>
