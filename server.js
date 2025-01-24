@@ -1,21 +1,29 @@
 const express = require('express');
-const path = require('path'); // Core Node.js module for handling file paths
+const fetch = require('node-fetch'); // For server-side HTTP requests
 const app = express();
 
-// Set the port to the environment variable or default to 3000
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-// Define a route for the root URL ("/")
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Route to search cards on Scryfall
+app.get('/search', async (req, res) => {
+    const cardName = req.query.name; // Get the card name from the URL query
+    
+    try {
+        // Make the request to Scryfall API from the server-side
+        const response = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`);
+        const data = await response.json();
 
-// Handle undefined routes (optional fallback)
-app.get('*', (req, res) => {
-    res.status(404).send('Page not found');
+        if (response.ok) {
+            res.json(data); // Send data back to the front-end
+        } else {
+            res.status(response.status).json({ error: data });
+        }
+    } catch (error) {
+        console.error('Error fetching card data:', error);
+        res.status(500).json({ error: 'Failed to fetch card data' });
+    }
 });
 
 // Start the server
